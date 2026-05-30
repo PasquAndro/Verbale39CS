@@ -1,0 +1,2 @@
+# Verbale39CS
+Compilazione 
