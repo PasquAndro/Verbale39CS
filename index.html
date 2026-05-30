@@ -13,12 +13,12 @@
         <p>Elezione Diretta del Sindaco e del Consiglio Comunale</p>
         
         <div class="toolbar">
-            <button id="btn-salva-json" class="btn-success">SALVATAGGIO</button>
+            <button id="btn-salva-json" class="btn-success">  Salva </button>
             <label for="carica-json" class="btn-link">
-                Carica Salvataggio
+                  Carica salvataggio
                 <input type="file" id="carica-json" accept=".json" style="display:none;">
             </label>
-            <button id="btn-reset" class="btn-danger"> Cancella Tutto</button>
+            <button id="btn-reset" class="btn-danger">  Cancella Tutto</button>
             <span id="stato-salvataggio" class="stato-ok">Calcoli sincronizzati</span>
         </div>
     </header>
@@ -27,7 +27,7 @@
         <nav class="sidebar no-print">
             <h3>Indice Paragrafi</h3>
             <ul>
-                <li><a href="#sez-config" class="active"> Configurazione iniziale</a></li>
+                <li><a href="#sez-config" class="active">  Configurazione iniziale</a></li>
                 <li><a href="#sez-parte1">Parte 1: Costituzione e Voto</a></li>
                 <li><a href="#sez-parte2">Parte 2: Scrutinio e Tabelle</a></li>
             </ul>
@@ -157,7 +157,7 @@
                             <input type="number" id="p6-schede-pacco" data-path="parte1.p6.schede_pacco" value="0">
                         </div>
                         <div class="form-group" style="background-color: #fffde7; padding: 5px; border-radius: 4px;">
-                            <label style="color: #b71c1c; font-weight: bold;">?? Numero REALE schede contate:</label>
+                            <label style="color: #b71c1c; font-weight: bold;">  Numero REALE schede contate:</label>
                             <input type="number" id="p6-schede-reali" data-path="parte1.p6.schede_reali" value="0" style="border: 1px solid #b71c1c;">
                         </div>
                         <div class="form-group">
@@ -176,7 +176,7 @@
                 </div>
 
                 <div class="paragraph-block" style="margin-top: 25px; border-left: 5px solid #00bcd4; background-color: #f0fbfd;">
-                    <h3>?? Ripartizione e Distribuzione dei Mazzetti da Firmare</h3>
+                    <h3>  Ripartizione e Distribuzione dei Mazzetti da Firmare</h3>
                     <p class="info-text">Pianifica la firma preventiva delle schede. Il sistema calcola la divisione del lavoro partendo dal <b>Numero di schede da autenticare</b> tra i 4 Scrutatori e il Vice Presidente (5 firmatari totali).</p>
 
                     <div class="grid-2-col">
@@ -310,7 +310,7 @@
                                 <td><input type="number" id="p21-e" disabled class="input-readonly" value="0"></td>
                             </tr>
                             <tr class="riga-totale">
-                                <td><b>TOTAL &sect; 21</b></td>
+                                <td><b>TOTALE &sect; 21</b></td>
                                 <td><b>Totale schede consegnate agli elettori ma NON utilizzate per il voto</b></td>
                                 <td><strong id="p21-totale">0</strong></td>
                             </tr>
@@ -356,7 +356,7 @@
                 </div>
 
                 <div class="paragraph-block highlights-box-orange" style="margin-top: 30px;">
-                    <h3>?? Schede Non Valide e Voti Nulli (&sect; 27 - &sect; 29)</h3>
+                    <h3>  Schede Non Valide e Voti Nulli (&sect; 27 - &sect; 29)</h3>
                     <p class="info-text">Inserisci il conteggio delle schede che non contengono voti validi rilevate durante lo spoglio.</p>
                     <div class="grid-3-col">
                         <div class="form-group grid-calcoli">
@@ -375,59 +375,39 @@
                 </div>
 
                 <div class="paragraph-block">
-                    <h3>?? &sect; 36. Risultato dello Scrutinio per l'Elezione del Sindaco</h3>
-                    <p class="info-text">Inserisci i voti validi ottenuti da ciascun candidato alla carica di Sindaco (compresi i voti contestati ed assegnati).</p>
+                    <h3>  &sect; 36. Risultato dello Scrutinio per l'Elezione del Sindaco</h3>
+                    <p class="info-text">Aggiungi i Candidati Sindaco presenti sul manifesto. Digita il nome, i riferimenti delle liste collegate e i voti ottenuti.</p>
                     
                     <table class="table-seggio">
                         <thead>
                             <tr>
-                                <th>N.</th>
-                                <th>Candidato alla Carica di Sindaco</th>
-                                <th>Liste Collegate (Riferimenti)</th>
+                                <th style="width: 70px;">N. Cand.</th>
+                                <th>Cognome e Nome Candidato Sindaco</th>
+                                <th>Liste Collegate (Descrizione/Numeri)</th>
                                 <th style="width: 200px;">Voti Validi Ottenuti</th>
+                                <th style="width: 80px;" class="no-print">Azione</th>
                             </tr>
                         </thead>
                         <tbody id="tabella-sindaco-body">
-                            <tr>
-                                <td>1</td>
-                                <td><b>Marcello Scurria</b></td>
-                                <td>Liste n. 2; 4; 16; 18; 24; 25</td>
-                                <td><input type="number" id="voti-sindaco-1" data-path="parte2.sindaco.voti_1" class="voti-sindaco-input" value="0" min="0" style="text-align:right; font-family:monospace; font-weight:bold;"></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td><b>Antonia Russo</b></td>
-                                <td>Liste n. 1; 14</td>
-                                <td><input type="number" id="voti-sindaco-2" data-path="parte2.sindaco.voti_2" class="voti-sindaco-input" value="0" min="0" style="text-align:right; font-family:monospace; font-weight:bold;"></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td><b>Federico Basile</b></td>
-                                <td>Liste n. 3; 5; 6; 7; 8; 9; 10; 11; 12; 13; 15; 17; 21; 23; 26</td>
-                                <td><input type="number" id="voti-sindaco-3" data-path="parte2.sindaco.voti_3" class="voti-sindaco-input" value="0" min="0" style="text-align:right; font-family:monospace; font-weight:bold;"></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td><b>Gaetano Sciacca</b></td>
-                                <td>Lista n. 19</td>
-                                <td><input type="number" id="voti-sindaco-4" data-path="parte2.sindaco.voti_4" class="voti-sindaco-input" value="0" min="0" style="text-align:right; font-family:monospace; font-weight:bold;"></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td><b>Letterio Valvieri</b></td>
-                                <td>Lista n. 22</td>
-                                <td><input type="number" id="voti-sindaco-5" data-path="parte2.sindaco.voti_5" class="voti-sindaco-input" value="0" min="0" style="text-align:right; font-family:monospace; font-weight:bold;"></td>
-                            </tr>
+                            </tbody>
+                        <tfoot>
                             <tr class="riga-totale" style="background-color: #f1f2f6;">
                                 <td colspan="3" style="text-align: right;"><b>TOTALE VOTI VALIDI AI CANDIDATI SINDACO:</b></td>
-                                <td><strong id="totale-voti-sindaco" style="display:block; text-align:right; font-family:monospace; font-size:1.1rem;">0</strong></td>
+                                <td style="text-align: right;"><strong id="totale-voti-sindaco" style="font-family:monospace; font-size:1.1rem;">0</strong></td>
+                                <td class="no-print"></td>
                             </tr>
-                        </tbody>
+                            <tr class="no-print" style="background-color: #fafafa;">
+                                <td colspan="3" style="text-align: left; padding: 15px 12px;">
+                                    <button type="button" id="btn-aggiungi-sindaco" class="btn-success" style="background-color: #1e3d59; margin: 0;">? Aggiungi Nuovo Candidato Sindaco</button>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
 
                 <div class="paragraph-block highlights-box" id="blocco-quadratura" style="border-left-color: #1e3d59 !important; background-color: #f7f9fa;">
-                    <h3>?? &sect; 38. Prospetto Riepilogativo e Verifica della Quadratura</h3>
+                    <h3>  &sect; 38. Prospetto Riepilogativo e Verifica della Quadratura</h3>
                     <p class="info-text">Il sistema esegue il riscontro automatico tra il totale delle schede spogliate e il numero di votanti della sezione (&sect; 35).</p>
                     
                     <div class="grid-2-col">
@@ -471,7 +451,7 @@
                 </div>
 
                 <div class="paragraph-block" style="margin-top: 30px;">
-                    <h3>?? &sect; 37. Risultato dello Scrutinio per il Consiglio Comunale</h3>
+                    <h3>  &sect; 37. Risultato dello Scrutinio per il Consiglio Comunale</h3>
                     <p class="info-text">Aggiungi le liste presenti nel tuo manifesto. Digita il nome, inserisci le schede con preferenza (a) e senza preferenza (b). Il sistema calcolerà i totali automaticamente.</p>
                     
                     <table class="table-seggio">
