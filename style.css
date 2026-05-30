@@ -1,0 +1,386 @@
+﻿/* style.css */
+
+/* --- REGISTRO DEI COLORI E VARIABILI --- */
+:root {
+    --bg-principale: #f4f6f8;
+    --bg-card: #ffffff;
+    --testo-scuro: #2c3e50;
+    --primario-blu: #1e3d59;
+    --primario-luce: #17b978;
+    --accento-azzurro: #00bcd4;
+    --bordo-colore: #dcdde1;
+    --successo-verde: #2e7d32;
+    --successo-bg: #e8f5e9;
+    --attenzione-orange: #e65100;
+    --attenzione-bg: #fff3e0;
+}
+
+/* --- RESET GENERALE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-principale);
+    color: var(--testo-scuro);
+    line-height: 1.5;
+}
+
+/* --- HEADER E TOOLBAR (PANNELLO COMANDI) --- */
+header {
+    background-color: var(--primario-blu);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.toolbar {
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* --- PULSANTI --- */
+button, .btn-link {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-success { background-color: #2ecc71; color: white; }
+.btn-success:hover { background-color: #27ae60; }
+
+.btn-link { background-color: #34495e; color: white; display: inline-block; text-align: center;}
+.btn-link:hover { background-color: #2c3e50; }
+
+.btn-danger { background-color: #e74c3c; color: white; }
+.btn-danger:hover { background-color: #c0392b; }
+
+.stato-ok {
+    margin-left: auto;
+    font-size: 0.85rem;
+    background: rgba(46, 204, 113, 0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #2ecc71;
+}
+
+/* --- LAYOUT A DUE COLONNE (SIDEBAR + CONTENUTO) --- */
+.container {
+    display: flex;
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 20px;
+    gap: 25px;
+}
+
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.sidebar h3 {
+    font-size: 1.1rem;
+    color: var(--primario-blu);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--bg-principale);
+    padding-bottom: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px 12px;
+    color: var(--testo-scuro);
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.sidebar ul li a:hover, .sidebar ul li a.active {
+    background-color: #e3edf7;
+    color: var(--primario-blu);
+    font-weight: bold;
+}
+
+.content-area {
+    flex-grow: 1;
+}
+
+/* --- SEZIONI E PARAGRAFI (SCHEDE CONTAINER) --- */
+.form-section {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.form-section > h2 {
+    color: var(--primario-blu);
+    border-bottom: 3px solid var(--primario-blu);
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+}
+
+.paragraph-block {
+    background: #fafafa;
+    border: 1px solid var(--bordo-colore);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.paragraph-block h3 {
+    color: var(--primario-blu);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.paragraph-block h4 {
+    margin: 20px 0 10px 0;
+    color: #4a5568;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-text {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+/* --- GRIGLIE E FORM --- */
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #34495e;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    padding: 10px;
+    border: 1px solid var(--bordo-colore);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--testo-scuro);
+    background-color: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--primario-blu);
+    box-shadow: 0 0 0 3px rgba(30, 61, 89, 0.15);
+}
+
+/* Input particolari (Numeri Monospazio) */
+.grid-calcoli input[type="number"] {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: bold;
+    text-align: right;
+    font-size: 1.1rem;
+}
+
+/* Campi in sola lettura (Readonly/Disabled) */
+.input-readonly, input:disabled {
+    background-color: #eaeded !important;
+    color: #7f8c8d !important;
+    cursor: not-allowed;
+    border-style: dashed !important;
+}
+
+.help-text {
+    font-size: 0.8rem;
+    color: #95a5a6;
+    margin-top: 4px;
+}
+
+/* --- TABELLE ELETTORALI --- */
+.table-seggio {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+}
+
+.table-seggio th, .table-seggio td {
+    border: 1px solid var(--bordo-colore);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.table-seggio th {
+    background-color: #f1f2f6;
+    color: var(--primario-blu);
+    font-weight: 700;
+}
+
+.table-seggio td input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+}
+
+.table-seggio td input:focus {
+    border-color: var(--primario-blu);
+    background: white;
+}
+
+.riga-totale {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+/* --- BOX SPECIALI PER BLOCCHI DI CONTEGGIO --- */
+.highlights-box {
+    border-left: 5px solid var(--successo-verde) !important;
+    background-color: #fafdfa !important;
+}
+
+.highlights-box-orange {
+    border-left: 5px solid var(--attenzione-orange) !important;
+    background-color: #fffdfb !important;
+}
+
+.totale-paragrafo {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: var(--successo-bg);
+    color: var(--successo-verde);
+    border: 1px solid #c8e6c9;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+
+.totale-paragrafo strong {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1.3rem;
+}
+
+.quadratura-box {
+    background-color: #34495e;
+    color: white;
+    border-color: #2c3e50;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.quadratura-box strong {
+    color: #2ecc71;
+}
+
+.badge-mazzetti {
+    display: inline-block;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* --- REGOLE SPECIFICHE PER LA STAMPA SU CARTA --- */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+        font-size: 12pt;
+    }
+    
+    .no-print {
+        display: none !important; /* Nasconde Toolbar, Header e Menu laterale */
+    }
+    
+    .container {
+        display: block;
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+    
+    .form-section {
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 0;
+        page-break-after: always; /* Forza una nuova pagina per ogni macro parte */
+    }
+    
+    .paragraph-block {
+        border: none;
+        border-bottom: 1px solid #000;
+        padding: 10px 0;
+        page-break-inside: avoid; /* Evita che un paragrafo venga spezzato a metà tra due fogli */
+    }
+    
+    input[type="text"], input[type="number"], select {
+        border: none !important;
+        border-bottom: 1px dotted #000 !important; /* Trasforma i rettangoli in linee puntinate per la firma */
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 2px !important;
+    }
+    
+    .totale-paragrafo {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: black !important;
+    }
+    
+    .totale-paragrafo strong {
+        color: black !important;
+    }
+}
