@@ -1,7 +1,6 @@
 ﻿// js/parte2/scrutinio_liste.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Inizializza l'ascolto sul pulsante "Aggiungi"
     const btnAggiungi = document.getElementById("btn-aggiungi-lista");
     if (btnAggiungi) {
         btnAggiungi.addEventListener("click", () => {
@@ -10,12 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Se l'applicazione viene ricaricata o riaperta, ricrea le liste salvate nel LocalStorage
     document.addEventListener("verbale:ricaricato", () => {
         ricostruisciListeDaStatoSalvato();
     });
 
-    // Intercetta gli input all'interno della tabella per i calcoli in tempo reale
     const tbody = document.getElementById("tabella-liste-consiglio-body");
     if (tbody) {
         tbody.addEventListener("input", () => {
@@ -34,7 +31,6 @@ function creaNuovaRigaListaInTabella(nomeLista = "", valoreA = 0, valoreB = 0) {
     const tbody = document.getElementById("tabella-liste-consiglio-body");
     if (!tbody) return;
 
-    // Calcoliamo in automatico il numero progressivo della lista basandoci sul numero di righe presenti
     const numeroLista = tbody.children.length + 1;
 
     const row = document.createElement("tr");
@@ -59,7 +55,6 @@ function creaNuovaRigaListaInTabella(nomeLista = "", valoreA = 0, valoreB = 0) {
         </td>
     `;
 
-    // Gestione del pulsante di cancellazione della singola riga
     row.querySelector(".btn-cancella-riga").addEventListener("click", () => {
         row.remove();
         riordinaNumerazioneProgressivaListe();
@@ -72,7 +67,7 @@ function creaNuovaRigaListaInTabella(nomeLista = "", valoreA = 0, valoreB = 0) {
 }
 
 /**
- * Riordina i numeri della prima colonna (1, 2, 3...) se viene rimossa una riga intermedia
+ * Riordina i numeri della prima colonna se viene rimossa una riga intermedia
  */
 function riordinaNumerazioneProgressivaListe() {
     const righe = document.querySelectorAll("#tabella-liste-consiglio-body .riga-lista-dinamica");
@@ -82,7 +77,7 @@ function riordinaNumerazioneProgressivaListe() {
 }
 
 /**
- * Esegue i calcoli matematici (orizzontali e verticali) su tutte le righe create
+ * Esegue i calcoli matematici su tutte le righe create e forza l'aggiornamento della quadratura BIS
  */
 function ricalcolaTotaliListeConsiglio() {
     const righe = document.querySelectorAll("#tabella-liste-consiglio-body .riga-lista-dinamica");
@@ -99,28 +94,29 @@ function ricalcolaTotaliListeConsiglio() {
         const valA = inputA ? (parseFloat(inputA.value) || 0) : 0;
         const valB = inputB ? (parseFloat(inputB.value) || 0) : 0;
         
-        // Calcolo orizzontale della singola riga
         const totRiga = valA + valB;
         if (txtTot) txtTot.textContent = totRiga;
 
-        // Somme verticali
         totaleA += valA;
         totaleB += valB;
         totaleGenerale += totRiga;
     });
 
-    // Aggiorna le celle dei totali di fine tabella
     if (document.getElementById("totale-colonna-a")) document.getElementById("totale-colonna-a").textContent = totaleA;
     if (document.getElementById("totale-colonna-b")) document.getElementById("totale-colonna-b").textContent = totaleB;
     if (document.getElementById("totale-voti-liste-generale")) document.getElementById("totale-voti-liste-generale").textContent = totaleGenerale;
 
-    // Aggiorna automaticamente il Prospetto Riepilogativo (§ 38)
     const txtQuadListe = document.getElementById("quad-voti-liste");
     if (txtQuadListe) txtQuadListe.textContent = totaleGenerale;
+
+    // FORZA IL RICALCOLO DELL'ULTERIORE QUADRATURA CONTROLLO INTERNO
+    if (window.sincronizzaTabelleECalcolaTotali) {
+        window.sincronizzaTabelleECalcolaTotali();
+    }
 }
 
 /**
- * Immagazzina i dati scritti a mano dentro l'oggetto globale VERBALE_DATA per consentire il backup
+ * Immagazzina i dati scritti a mano dentro l'oggetto globale VERBALE_DATA
  */
 function salvaStatoListeNelModelloGlobale() {
     if (typeof VERBALE_DATA === 'undefined') return;
@@ -141,14 +137,12 @@ function salvaStatoListeNelModelloGlobale() {
         });
     });
 
-    // Salviamo l'array delle liste create nello stato della Parte 2
     if (!VERBALE_DATA.parte2.liste_scrutinate_dinamiche) {
         VERBALE_DATA.parte2.liste_scrutinate_dinamiche = [];
     }
     
     VERBALE_DATA.parte2.liste_scrutinate_dinamiche = elencoListeDaSalvare;
     
-    // Aggiorna anche le somme generali nell'oggetto di stato
     VERBALE_DATA.parte2.liste_calcolate = {
         totale_verticale_a: parseFloat(document.getElementById("totale-colonna-a").textContent) || 0,
         totale_verticale_b: parseFloat(document.getElementById("totale-colonna-b").textContent) || 0,
@@ -158,16 +152,13 @@ function salvaStatoListeNelModelloGlobale() {
     localStorage.setItem("verbale_elettorale_mod39cs", JSON.stringify(VERBALE_DATA));
 }
 
-/**
- * Riprende le liste salvate e le ricrea a schermo (es. dopo F5 o caricamento file JSON)
- */
 function ricostruisciListeDaStatoSalvato() {
     if (typeof VERBALE_DATA === 'undefined' || !VERBALE_DATA.parte2.liste_scrutinate_dinamiche) return;
 
     const tbody = document.getElementById("tabella-liste-consiglio-body");
     if (!tbody) return;
     
-    tbody.innerHTML = ""; // Svuota l'interfaccia corrente
+    tbody.innerHTML = "";
 
     const listeSalvate = VERBALE_DATA.parte2.liste_scrutinate_dinamiche;
     
