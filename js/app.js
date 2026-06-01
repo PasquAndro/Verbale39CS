@@ -165,3 +165,153 @@ function impostaValoreDaPath(obj, path, value) {
 function ottieniValoreDaPath(obj, path) {
     return path.split('.').reduce((corrente, parte) => (corrente && corrente[parte] !== undefined) ? corrente[parte] : null, obj);
 }
+// Gestione Dinamica Paragrafo 2 - Rappresentanti di Lista
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAggiungiRappresentante = document.getElementById("btn-aggiungi-rappresentante");
+    const containerRappresentanti = document.getElementById("container-rappresentanti");
+
+    if (btnAggiungiRappresentante && containerRappresentanti) {
+        btnAggiungiRappresentante.addEventListener("click", () => {
+            const prossimoId = containerRappresentanti.children.length + 1;
+            
+            const card = document.createElement("div");
+            card.className = "card-rappresentante-coppia";
+            card.setAttribute("data-index", prossimoId);
+            card.style.position = "relative";
+            card.style.background = "#f9f9f9";
+            card.style.padding = "12px";
+            card.style.border = "1px solid #e0e0e0";
+            card.style.borderRadius = "4px";
+            card.style.marginBottom = "10px";
+            
+            card.innerHTML = `
+                <h4 style="margin:0 0 8px 0; color:#1e3d59;">Lista N. ${prossimoId}</h4>
+                <div class="form-group" style="margin-bottom:6px;">
+                    <label style="font-size:0.85rem; color:#555;">1° Rappresentante Effettivo:</label>
+                    <input type="text" data-path="parte1.p2.lista_${prossimoId}.effettivo" placeholder="Cognome e Nome">
+                </div>
+                <div class="form-group">
+                    <label style="font-size:0.85rem; color:#555;">2° Rappresentante Supplente:</label>
+                    <input type="text" data-path="parte1.p2.lista_${prossimoId}.supplente" placeholder="Cognome e Nome">
+                </div>
+                <button type="button" class="btn-rimuovi-coppia no-print" style="position: absolute; right: 8px; top: 8px; background: transparent; border: none; color: #e74c3c; cursor: pointer; font-size: 0.85rem; font-weight: bold;"> Rimouvi</button>
+            `;
+
+            card.querySelector(".btn-rimuovi-coppia").addEventListener("click", () => {
+                card.remove();
+                riordinaNumerazioneCoppieRappresentanti();
+                salvaStatoRappresentantiCompleto();
+            });
+
+            containerRappresentanti.appendChild(card);
+            
+            // Collega i nuovi input alla logica di salvataggio real-time se attiva nel core
+            if (window.app && typeof window.app.bindDynamicInput === 'function') {
+                card.querySelectorAll("input").forEach(inp => window.app.bindDynamicInput(inp));
+            }
+        });
+    }
+
+    // Intercetta modifiche manuali sui campi di testo per salvare lo stato
+    if (containerRappresentanti) {
+        containerRappresentanti.addEventListener("input", () => {
+            salvaStatoRappresentantiCompleto();
+        });
+    }
+    
+    document.addEventListener("verbale:ricaricato", () => {
+        if (typeof VERBALE_DATA !== 'undefined' && VERBALE_DATA.parte1 && VERBALE_DATA.parte1.p2_duplici) {
+            ricostruisciRappresentantiDaBackupCoppie(VERBALE_DATA.parte1.p2_duplici);
+        }
+    });
+});
+
+/**
+ * Ricalcola la numerazione corretta dei blocchi e i relativi percorsi data-path
+ */
+function riordinaNumerazioneCoppieRappresentanti() {
+    const cards = document.querySelectorAll("#container-rappresentanti .card-rappresentante-coppia");
+    cards.forEach((card, index) => {
+        const nuovoNumero = index + 1;
+        card.setAttribute("data-index", nuovoNumero);
+        card.querySelector("h4").textContent = `Lista N. ${nuovoNumero}`;
+        
+        const inputs = card.querySelectorAll("input");
+        if (inputs.length === 2) {
+            inputs[0].setAttribute("data-path", `parte1.p2.lista_${nuovoNumero}.effettivo`);
+            inputs[1].setAttribute("data-path", `parte1.p2.lista_${nuovoNumero}.supplente`);
+        }
+    });
+}
+
+/**
+ * Sincronizza i dati inseriti con l'oggetto globale per non perdere nulla all'esportazione
+ */
+function salvaStatoRappresentantiCompleto() {
+    if (typeof VERBALE_DATA === 'undefined') return;
+    const cards = document.querySelectorAll("#container-rappresentanti .card-rappresentante-coppia");
+    
+    const elencoRappresentanti = [];
+    cards.forEach((card, idx) => {
+        const num = idx + 1;
+        const inputs = card.querySelectorAll("input");
+        elencoRappresentanti.push({
+            lista: num,
+            effettivo: inputs[0] ? inputs[0].value : "",
+            supplente: inputs[1] ? inputs[1].value : ""
+        });
+    });
+
+    if (!VERBALE_DATA.parte1) VERBALE_DATA.parte1 = {};
+    VERBALE_DATA.parte1.p2_duplici = elencoRappresentanti;
+    localStorage.setItem("verbale_elettorale_mod39cs", JSON.stringify(VERBALE_DATA));
+}
+
+/**
+ * Genera i moduli aggiuntivi al caricamento del file JSON se le liste superano il numero di base
+ */
+function ricostruisciRappresentantiDaBackupCoppie(p2Duplici) {
+    const container = document.getElementById("container-rappresentanti");
+    if (!container || !p2Duplici || p2Duplici.length === 0) return;
+
+    container.innerHTML = ""; // Resetta i 4 iniziali per iniettare i dati reali
+
+    p2Duplici.forEach(item => {
+        const btn = document.getElementById("btn-aggiungi-rappresentante");
+        if (btn) {
+            // Sfrutta la funzione nativa di aggiunta riga
+            const prossimoid = container.children.length + 1;
+            const card = document.createElement("div");
+            card.className = "card-rappresentante-coppia";
+            card.setAttribute("data-index", prossimoid);
+            card.style.background = "#f9f9f9";
+            card.style.padding = "12px";
+            card.style.border = "1px solid #e0e0e0";
+            card.style.borderRadius = "4px";
+            card.style.marginBottom = "10px";
+            card.style.position = "relative";
+            
+            card.innerHTML = `
+                <h4 style="margin:0 0 8px 0; color:#1e3d59;">Lista N. ${prossimoid}</h4>
+                <div class="form-group" style="margin-bottom:6px;">
+                    <label style="font-size:0.85rem; color:#555;">1° Rappresentante Effettivo:</label>
+                    <input type="text" data-path="parte1.p2.lista_${prossimoid}.effettivo" value="${item.effettivo || ''}" placeholder="Cognome e Nome">
+                </div>
+                <div class="form-group">
+                    <label style="font-size:0.85rem; color:#555;">2° Rappresentante Supplente:</label>
+                    <input type="text" data-path="parte1.p2.lista_${prossimoid}.supplente" value="${item.supplente || ''}" placeholder="Cognome e Nome">
+                </div>
+                <button type="button" class="btn-rimuovi-coppia no-print" style="position: absolute; right: 8px; top: 8px; background: transparent; border: none; color: #e74c3c; cursor: pointer; font-size: 0.85rem; font-weight: bold;"> Rimouvi</button>
+            `;
+
+            card.querySelector(".btn-rimuovi-coppia").addEventListener("click", () => {
+                card.remove();
+                riordinaNumerazioneCoppieRappresentanti();
+                salvaStatoRappresentantiCompleto();
+            });
+
+            container.appendChild(card);
+        }
+    });
+}
