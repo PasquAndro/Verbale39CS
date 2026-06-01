@@ -9,34 +9,48 @@
 <body>
 
     <header class="no-print">
-        <h1>Verbale Elettorale Digitale - Mod. 39-CS</h1>
-        <p>Elezione Diretta del Sindaco e del Consiglio Comunale</p>
+        <h1>Verbale Elettorale Digitale - Mod. 39-CS (Regione Siciliana)</h1>
+        <p>Elezione Diretta del Sindaco e del Consiglio Comunale - L.R. 35/1997</p>
         
+        <!-- Pannello di Controllo Salvataggi -->
         <div class="toolbar">
-            <button id="btn-salva-json" class="btn-success">  Salva </button>
+            <button id="btn-salva-json" class="btn-success">Salva i dati caricati</button>
             <label for="carica-json" class="btn-link">
-                  Carica salvataggio
+                Ripristina i dati salvati
                 <input type="file" id="carica-json" accept=".json" style="display:none;">
             </label>
-            <button id="btn-reset" class="btn-danger">  Cancella Tutto</button>
+            <button id="btn-reset" class="btn-danger">Cancella Tutto</button>
             <span id="stato-salvataggio" class="stato-ok">Calcoli sincronizzati</span>
         </div>
     </header>
 
     <main class="container">
+        <!-- Menu di navigazione tra i Paragrafi -->
         <nav class="sidebar no-print">
             <h3>Indice Paragrafi</h3>
             <ul>
-                <li><a href="#sez-config" class="active">  Configurazione iniziale</a></li>
+                <li><a href="#sez-config" class="active"> Configurazione iniziale</a></li>
                 <li><a href="#sez-parte1">Parte 1: Costituzione e Voto</a></li>
                 <li><a href="#sez-parte2">Parte 2: Scrutinio e Tabelle</a></li>
             </ul>
         </nav>
 
+        <!-- Area Contenuto Moduli -->
         <section class="content-area">
             
+            <!-- SEZIONE CONFIGURAZIONE INIZIALE -->
             <div id="sez-config" class="form-section">
-                <h2>Configurazione della Sezione</h2>
+                <h2>Configurazione della Sezione (Normativa Siciliana)</h2>
+                
+                <!-- Selezione del tipo di comune posizionata in testa -->
+                <div class="form-group" style="background-color: #fff8e1; padding: 12px; border-radius: 6px; border: 1px solid #ffe082; margin-bottom: 20px;">
+                    <label for="cfg-tipo-comune" style="color: #b71c1c; font-weight: bold; font-size: 1.05rem;">Scegli la legislazione applicabile (in base alla popolazione del Comune siciliano):</label>
+                    <select id="cfg-tipo-comune" data-path="config.tipo_comune" style="font-weight: bold; color: #b71c1c; border-color: #ffe082; width: 100%; margin-top: 5px; padding: 6px;">
+                        <option value="superiore" selected>Comuni con popolazione SUPERIORE a 15.000 abitanti (Sistema Proporzionale / Ammesso Voto Disgiunto)</option>
+                        <option value="inferiore">Comuni con popolazione SINO a 15.000 abitanti (Sistema Maggioritario / Vietato Voto Disgiunto)</option>
+                    </select>
+                </div>
+
                 <div class="grid-2-col">
                     <div class="form-group">
                         <label for="cfg-comune">Comune di:</label>
@@ -49,9 +63,11 @@
                 </div>
             </div>
 
+            <!-- SEZIONE PARTE PRIMA: OPERAZIONI PRELIMINARI -->
             <div id="sez-parte1" class="form-section">
                 <h2>Parte Prima: Insediamento Ufficio ed Operazioni Preliminari</h2>
 
+                <!-- § 1. COSTITUZIONE DELL'UFFICIO ELETTORALE -->
                 <div class="paragraph-block">
                     <h3>&sect; 1. Costituzione dell'ufficio elettorale</h3>
                     <div class="grid-3-col">
@@ -99,29 +115,68 @@
                     </table>
                 </div>
 
+                <!-- § 2. INTERVENTO DEI RAPPRESENTANTI DELLE LISTE -->
                 <div class="paragraph-block">
-                    <h3>&sect; 2. Intervento dei rappresentanti delle liste</h3>
-                    <p class="info-text">Indica il numero della lista e il nominativo del Rappresentante Effettivo (1°) presente alle operazioni preliminari.</p>
+                    <h3>&sect; 2. Intervento dei rappresentanti delle Recovery liste</h3>
+                    <p class="info-text">Indica il numero della lista e i nominativi del Rappresentante Effettivo (1&ordm;) e del Supplente (2&ordm;) indicati a verbale.</p>
+                    
                     <div class="grid-2-col" id="container-rappresentanti">
-                        <div class="form-group card-rappresentante">
-                            <label>Rappresentante Lista N. 1:</label>
-                            <input type="text" data-path="parte1.p2.lista_1" placeholder="Cognome e Nome">
+                        <!-- Lista 1 -->
+                        <div class="card-rappresentante-coppia" data-index="1" style="background:#f9f9f9; padding:12px; border-radius:4px; border:1px solid #e0e0e0; margin-bottom:10px;">
+                            <h4 style="margin:0 0 8px 0; color:#1e3d59;">Lista N. 1</h4>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label style="font-size:0.85rem; color:#555;">1&ordm; Rappresentante Effettivo:</label>
+                                <input type="text" data-path="parte1.p2.lista_1.effettivo" placeholder="Cognome e Nome">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:0.85rem; color:#555;">2&ordm; Rappresentante Supplente:</label>
+                                <input type="text" data-path="parte1.p2.lista_1.supplente" placeholder="Cognome e Nome">
+                            </div>
                         </div>
-                        <div class="form-group card-rappresentante">
-                            <label>Rappresentante Lista N. 2:</label>
-                            <input type="text" data-path="parte1.p2.lista_2" placeholder="Cognome e Nome">
+                        <!-- Lista 2 -->
+                        <div class="card-rappresentante-coppia" data-index="2" style="background:#f9f9f9; padding:12px; border-radius:4px; border:1px solid #e0e0e0; margin-bottom:10px;">
+                            <h4 style="margin:0 0 8px 0; color:#1e3d59;">Lista N. 2</h4>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label style="font-size:0.85rem; color:#555;">1&ordm; Rappresentante Effettivo:</label>
+                                <input type="text" data-path="parte1.p2.lista_2.effettivo" placeholder="Cognome e Nome">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:0.85rem; color:#555;">2&ordm; Rappresentante Supplente:</label>
+                                <input type="text" data-path="parte1.p2.lista_2.supplente" placeholder="Cognome e Nome">
+                            </div>
                         </div>
-                        <div class="form-group card-rappresentante">
-                            <label>Rappresentante Lista N. 3:</label>
-                            <input type="text" data-path="parte1.p2.lista_3" placeholder="Cognome e Nome">
+                        <!-- Lista 3 -->
+                        <div class="card-rappresentante-coppia" data-index="3" style="background:#f9f9f9; padding:12px; border-radius:4px; border:1px solid #e0e0e0; margin-bottom:10px;">
+                            <h4 style="margin:0 0 8px 0; color:#1e3d59;">Lista N. 3</h4>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label style="font-size:0.85rem; color:#555;">1&ordm; Rappresentante Effettivo:</label>
+                                <input type="text" data-path="parte1.p2.lista_3.effettivo" placeholder="Cognome e Nome">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:0.85rem; color:#555;">2&ordm; Rappresentante Supplente:</label>
+                                <input type="text" data-path="parte1.p2.lista_3.supplente" placeholder="Cognome e Nome">
+                            </div>
                         </div>
-                        <div class="form-group card-rappresentante">
-                            <label>Rappresentante Lista N. 4:</label>
-                            <input type="text" data-path="parte1.p2.lista_4" placeholder="Cognome e Nome">
+                        <!-- Lista 4 -->
+                        <div class="card-rappresentante-coppia" data-index="4" style="background:#f9f9f9; padding:12px; border-radius:4px; border:1px solid #e0e0e0; margin-bottom:10px;">
+                            <h4 style="margin:0 0 8px 0; color:#1e3d59;">Lista N. 4</h4>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label style="font-size:0.85rem; color:#555;">1&ordm; Rappresentante Effettivo:</label>
+                                <input type="text" data-path="parte1.p2.lista_4.effettivo" placeholder="Cognome e Nome">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:0.85rem; color:#555;">2&ordm; Rappresentante Supplente:</label>
+                                <input type="text" data-path="parte1.p2.lista_4.supplente" placeholder="Cognome e Nome">
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="no-print" style="margin-top: 20px; text-align: left;">
+                        <button type="button" id="btn-aggiungi-rappresentante" class="btn-success" style="background-color: #00838f;">Aggiungi Nuovo Rappresentante di Lista</button>
                     </div>
                 </div>
 
+                <!-- § 6. BOLLO DELLA SEZIONE ED AUTENTICAZIONE DELLE SCHEDE -->
                 <div class="paragraph-block highlights-box">
                     <h3>&sect; 6. Accertamento elettori ed autenticazione delle schede</h3>
                     <div class="form-group style-inline">
@@ -150,14 +205,14 @@
                         <strong id="p6-totale-elettori">0</strong>
                     </div>
 
-                    <h4 style="margin-top: 20px;">Riscontro delle schede del pacco</h4>
+                    <h4>Riscontro delle schede del pacco</h4>
                     <div class="grid-3-col">
                         <div class="form-group">
                             <label>Numero schede dichiarate (Comune):</label>
                             <input type="number" id="p6-schede-pacco" data-path="parte1.p6.schede_pacco" value="0">
                         </div>
-                        <div class="form-group" style="background-color: #fffde7; padding: 5px; border-radius: 4px;">
-                            <label style="color: #b71c1c; font-weight: bold;">  Numero REALE schede contate:</label>
+                        <div class="form-group" style="background-color: #fffide7; padding: 5px; border-radius: 4px;">
+                            <label style="color: #b71c1c; font-weight: bold;"> Numero REALE schede contate:</label>
                             <input type="number" id="p6-schede-reali" data-path="parte1.p6.schede_reali" value="0" style="border: 1px solid #b71c1c;">
                         </div>
                         <div class="form-group">
@@ -175,9 +230,10 @@
                     </div>
                 </div>
 
+                <!-- RIPARTIZIONE FIRMA MAZZETTI -->
                 <div class="paragraph-block" style="margin-top: 25px; border-left: 5px solid #00bcd4; background-color: #f0fbfd;">
-                    <h3>  Ripartizione e Distribuzione dei Mazzetti da Firmare</h3>
-                    <p class="info-text">Pianifica la firma preventiva delle schede. Il sistema calcola la divisione del lavoro partendo dal <b>Numero di schede da autenticare</b> tra i 4 Scrutatori e il Vice Presidente (5 firmatari totali).</p>
+                    <h3> Ripartizione e Distribuzione dei Mazzetti da Firmare</h3>
+                    <p class="info-text">Il sistema calcola la divisione del lavoro partendo dal Numero di schede da autenticare tra i 4 Scrutatori e il Vice Presidente (5 firmatari).</p>
 
                     <div class="grid-2-col">
                         <div class="form-group">
@@ -211,13 +267,15 @@
                             </tr>
                         </thead>
                         <tbody id="tabella-firmatari-body">
-                            </tbody>
+                            <!-- Iniezione via JS -->
+                        </tbody>
                     </table>
                 </div>
 
+                <!-- CASI PARTICOLARI VERIFICATISI NEL CORSO DELLA VOTAZIONE -->
                 <div class="paragraph-block highlights-box-orange" style="margin-top: 30px; border-left: 5px solid #ff9800;">
                     <h3>Casi Particolari nel Corso della Votazione (&sect; 13 - &sect; 20)</h3>
-                    <p class="info-text">Inserisci i dati numerici relativi agli eventi speciali. Questi numeri guideranno le quadrature dello scrutinio nella Parte Seconda.</p>
+                    <p class="info-text">Inserisci i dati numerici relativi agli eventi speciali.</p>
 
                     <div class="grid-2-col">
                         <div class="form-group">
@@ -244,7 +302,6 @@
 
                     <hr style="margin: 20px 0; border: 0; border-top: 1px dashed #ccc;">
                     <h4>Elettori aggiunti o assistiti</h4>
-                    
                     <div class="grid-3-col">
                         <div class="form-group">
                             <label><b>&sect; 16.</b> Elettori <b>fisicamente impediti</b>:</label>
@@ -265,16 +322,15 @@
                         <strong id="p1-totale-annullate">0</strong>
                     </div>
                 </div>
-
             </div>
 
+            <!-- SEZIONE PARTE SECONDA: OPERAZIONI PRELIMINARI ALLO SCRUTINIO -->
             <div id="sez-parte2" class="form-section">
                 <h2>Parte Seconda: Operazioni Preliminari allo Scrutinio e Tabelle</h2>
 
+                <!-- § 21 e § 22. RIPORTO AUTOMATICO SCHEDE -->
                 <div class="paragraph-block">
                     <h3>&sect; 21 e &sect; 22. Controllo delle schede autenticate e non utilizzate</h3>
-                    <p class="info-text">I seguenti dati sono riportati automaticamente dai casi particolari registrati durante la votazione.</p>
-                    
                     <table class="table-seggio">
                         <thead>
                             <tr>
@@ -284,44 +340,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><b>&sect; 21.a (&sect; 13)</b></td>
-                                <td>Schede ritirate ad elettori allontanati dalle cabine ed annullate</td>
-                                <td><input type="number" id="p21-a" disabled class="input-readonly" value="0"></td>
-                            </tr>
-                            <tr>
-                                <td><b>&sect; 21.b (&sect; 10)</b></td>
-                                <td>Schede deteriorate sostituite</td>
-                                <td><input type="number" id="p21-b" disabled class="input-readonly" value="0"></td>
-                            </tr>
-                            <tr>
-                                <td><b>&sect; 21.c (&sect; 14)</b></td>
-                                <td>Schede restituite mancanti del bollo o della firma dello scrutatore</td>
-                                <td><input type="number" id="p21-c" disabled class="input-readonly" value="0"></td>
-                            </tr>
-                            <tr>
-                                <td><b>&sect; 21.d (&sect; 14)</b></td>
-                                <td>Schede NON riconsegnate dagli elettori</td>
-                                <td><input type="number" id="p21-d" disabled class="input-readonly" value="0"></td>
-                            </tr>
-                            <tr>
-                                <td><b>&sect; 21.e (&sect; 15)</b></td>
-                                <td>Schede ritirate ad elettori rifiutatisi di recarsi nella cabina ed annullate</td>
-                                <td><input type="number" id="p21-e" disabled class="input-readonly" value="0"></td>
-                            </tr>
-                            <tr class="riga-totale">
-                                <td><b>TOTALE &sect; 21</b></td>
-                                <td><b>Totale schede consegnate agli elettori ma NON utilizzate per il voto</b></td>
-                                <td><strong id="p21-totale">0</strong></td>
-                            </tr>
+                            <tr><td><b>&sect; 21.a (&sect; 13)</b></td><td>Schede ritirate ad elettori allontanati dalle cabine ed annullate</td><td><input type="number" id="p21-a" disabled class="input-readonly" value="0"></td></tr>
+                            <tr><td><b>&sect; 21.b (&sect; 10)</b></td><td>Schede deteriorate sostituite</td><td><input type="number" id="p21-b" disabled class="input-readonly" value="0"></td></tr>
+                            <tr><td><b>&sect; 21.c (&sect; 14)</b></td><td>Schede restituite mancanti del bollo o della firma dello scrutatore</td><td><input type="number" id="p21-c" disabled class="input-readonly" value="0"></td></tr>
+                            <tr><td><b>&sect; 21.d (&sect; 14)</b></td><td>Schede NON riconsegnate dagli elettori</td><td><input type="number" id="p21-d" disabled class="input-readonly" value="0"></td></tr>
+                            <tr><td><b>&sect; 21.e (&sect; 15)</b></td><td>Schede ritirate ad elettori rifiutatisi di recarsi nella cabina ed annullate</td><td><input type="number" id="p21-e" disabled class="input-readonly" value="0"></td></tr>
+                            <tr class="riga-totale"><td><b>TOTALE &sect; 21</b></td><td><b>Totale schede consegnate agli elettori ma NON utilizzate per il voto</b></td><td><strong id="p21-totale">0</strong></td></tr>
                         </tbody>
                     </table>
                 </div>
 
+                <!-- § 23. ACCERTAMENTO DEI VOTANTI -->
                 <div class="paragraph-block highlights-box">
                     <h3>&sect; 23. Accertamento dei Votanti nella Sezione</h3>
-                    <p class="info-text">Inserisci il numero di elettori che hanno effettivamente votato, suddivisi per categoria come da registri e liste sezionali.</p>
-                    
                     <div class="grid-3-col grid-calcoli">
                         <div class="form-group input-calcolo">
                             <label>1) Elettori iscritti nelle liste di sezione che hanno votato:</label>
@@ -355,9 +386,9 @@
                     </div>
                 </div>
 
+                <!-- § 27, § 28, § 29. SCHEDE NON VALIDE -->
                 <div class="paragraph-block highlights-box-orange" style="margin-top: 30px;">
-                    <h3>  Schede Non Valide e Voti Nulli (&sect; 27 - &sect; 29)</h3>
-                    <p class="info-text">Inserisci il conteggio delle schede che non contengono voti validi rilevate durante lo spoglio.</p>
+                    <h3> Schede Non Valide e Voti Nulli (&sect; 27 - &sect; 29)</h3>
                     <div class="grid-3-col">
                         <div class="form-group grid-calcoli">
                             <label><b>&sect; 27.</b> Schede Bianche:</label>
@@ -374,31 +405,49 @@
                     </div>
                 </div>
 
+                <!-- § 36 COMPLETO: RISULTATO SCRUTINIO ELEZIONE SINDACO -->
                 <div class="paragraph-block">
-                    <h3>  &sect; 36. Risultato dello Scrutinio per l'Elezione del Sindaco</h3>
-                    <p class="info-text">Aggiungi i Candidati Sindaco presenti sul manifesto. Digita il nome, i riferimenti delle liste collegate e i voti ottenuti.</p>
+                    <h3> &sect; 36. Risultato dello Scrutinio per l'Elezione del Sindaco</h3>
                     
-                    <table class="table-seggio">
+                    <h4 style="margin-top:15px; color:#006064;"> Tabella a) Voti validi totali ed espressi solo al Sindaco</h4>
+                    <table class="table-seggio" style="margin-bottom: 25px;">
                         <thead>
                             <tr>
                                 <th style="width: 70px;">N. Cand.</th>
                                 <th>Cognome e Nome Candidato Sindaco</th>
-                                <th>Liste Collegate (Descrizione/Numeri)</th>
-                                <th style="width: 200px;">Voti Validi Ottenuti</th>
-                                <th style="width: 80px;" class="no-print">Azione</th>
+                                <th>Liste Collegate (Denominazione)</th>
+                                <th style="width: 160px;">Voti validi (*) <br><small>(Inclusi disgiunti e contestati)</small></th>
+                                <th style="width: 160px;" id="th-sindaco-solo">di cui espressi <br><b>SOLO</b> per il Sindaco</th>
+                                <th style="width: 70px;" class="no-print">Azione</th>
                             </tr>
                         </thead>
-                        <tbody id="tabella-sindaco-body">
-                            </tbody>
+                        <tbody id="tabella-sindaco-a-body">
+                            <!-- Righe dinamiche -->
+                        </tbody>
+                    </table>
+
+                    <h4 style="margin-top:20px; color:#b71c1c;"> SCRUTINIO ELEZIONE DEL SINDACO - Tabella b) Riepilogo Voti</h4>
+                    <table class="table-seggio">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">N.</th>
+                                <th>Candidato alla Carica di Sindaco</th>
+                                <th style="width: 180px; background-color: #e8f5e9;">(A) Voti validi attribuiti</th>
+                                <th style="width: 180px; background-color: #ffebee;">(B) Voti contestati <br>e NON attribuiti</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabella-sindaco-b-body">
+                            <!-- Righe speculari -->
+                        </tbody>
                         <tfoot>
                             <tr class="riga-totale" style="background-color: #f1f2f6;">
-                                <td colspan="3" style="text-align: right;"><b>TOTALE VOTI VALIDI AI CANDIDATI SINDACO:</b></td>
-                                <td style="text-align: right;"><strong id="totale-voti-sindaco" style="font-family:monospace; font-size:1.1rem;">0</strong></td>
-                                <td class="no-print"></td>
+                                <td colspan="2" style="text-align: right;"><b>TOTALI GENERALI &sect; 36:</b></td>
+                                <td style="text-align: right; background-color: #c8e6c9;"><strong id="totale-sindaco-col-a">0</strong></td>
+                                <td style="text-align: right; background-color: #ffcdd2;"><strong id="totale-sindaco-col-b">0</strong></td>
                             </tr>
                             <tr class="no-print" style="background-color: #fafafa;">
-                                <td colspan="3" style="text-align: left; padding: 15px 12px;">
-                                    <button type="button" id="btn-aggiungi-sindaco" class="btn-success" style="background-color: #1e3d59; margin: 0;">? Aggiungi Nuovo Candidato Sindaco</button>
+                                <td colspan="2" style="text-align: left; padding: 15px 12px;">
+                                    <button type="button" id="btn-aggiungi-sindaco" class="btn-success" style="background-color: #1e3d59; margin: 0;"> Aggiungi Nuovo Candidato Sindaco</button>
                                 </td>
                                 <td colspan="2"></td>
                             </tr>
@@ -406,16 +455,51 @@
                     </table>
                 </div>
 
+                <!-- § 37 DINAMICO: RISULTATO SCRUTINIO ELEZIONE CONSIGLIO COMUNALE -->
+                <div class="paragraph-block" style="margin-top: 30px;">
+                    <h3> &sect; 37. Risultato dello Scrutinio per il Consiglio Comunale</h3>
+                    <table class="table-seggio">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">N. Lista</th>
+                                <th>Nome / Contrassegno della Lista</th>
+                                <th style="width: 150px;">(a) Schede CON preferenza</th>
+                                <th style="width: 150px;">(b) Schede SENZA preferenza</th>
+                                <th style="width: 180px;">TOTALE Voti (a + b)</th>
+                                <th style="width: 80px;" class="no-print">Azione</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabella-liste-consiglio-body">
+                            <!-- Righe dinamiche -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="riga-totale" style="background-color: #f1f2f6;">
+                                <td colspan="2" style="text-align: right;"><b>TOTALI COMPLESSIVI DI LISTA:</b></td>
+                                <td style="text-align: right;"><strong id="totale-colonna-a">0</strong></td>
+                                <td style="text-align: right;"><strong id="totale-colonna-b">0</strong></td>
+                                <td style="text-align: right; background-color: #e3edf7;"><strong id="totale-voti-liste-generale">0</strong></td>
+                                <td class="no-print"></td>
+                            </tr>
+                            <tr class="no-print" style="background-color: #fafafa;">
+                                <td colspan="2" style="text-align: left; padding: 15px 12px;">
+                                    <button type="button" id="btn-aggiungi-lista" class="btn-success" style="background-color: #00838f; margin: 0;"> Aggiungi Nuova Lista</button>
+                                </td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- § 38. PROSPETTO RIEPILOGATIVO DI QUADRATURA GENERALE E TABELLA BIS -->
                 <div class="paragraph-block highlights-box" id="blocco-quadratura" style="border-left-color: #1e3d59 !important; background-color: #f7f9fa;">
-                    <h3>  &sect; 38. Prospetto Riepilogativo e Verifica della Quadratura</h3>
-                    <p class="info-text">Il sistema esegue il riscontro automatico tra il totale delle schede spogliate e il numero di votanti della sezione (&sect; 35).</p>
+                    <h3> &sect; 38. Prospetto Riepilogativo e Verifica della Quadratura</h3>
                     
                     <div class="grid-2-col">
                         <div>
                             <table class="table-seggio" style="background: transparent;">
                                 <tbody>
                                     <tr>
-                                        <td><b>Voti validi per i candidati Sindaco:</b></td>
+                                        <td><b>Voti validi per i candidati Sindaco (Totale Colonna A):</b></td>
                                         <td style="text-align: right;"><span id="quad-voti-validi" style="font-family:monospace; font-weight:bold;">0</span></td>
                                     </tr>
                                     <tr>
@@ -434,6 +518,10 @@
                                         <td>Schede contenenti solo voti nulli (&sect; 29):</td>
                                         <td style="text-align: right;"><span id="quad-solo-nulli" style="font-family:monospace; font-weight:bold;">0</span></td>
                                     </tr>
+                                    <tr>
+                                        <td>Schede contestate e non assegnate relative al Sindaco (Colonna B):</td>
+                                        <td style="text-align: right;"><span id="quad-sindaco-non-assegnate" style="font-family:monospace; font-weight:bold; color: #b71c1c;">0</span></td>
+                                    </tr>
                                     <tr class="riga-totale" style="background-color: rgba(30, 61, 89, 0.05);">
                                         <td><b>TOTALE GENERALE SCHEDE SCRUTINATE:</b></td>
                                         <td style="text-align: right;"><strong id="quad-totale-scrutinate" style="font-family:monospace; font-size:1.1rem;">0</strong></td>
@@ -442,51 +530,64 @@
                             </table>
                         </div>
                         
+                        <!-- Controllo Visivo Stato Quadratura Ufficiale -->
                         <div id="pannello-stato-quadratura" style="border-radius: 6px; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-weight: bold; font-size: 1.1rem; border: 2px solid #ccc; background-color: #fff;">
-                            <div id="quad-icona" style="font-size: 2.5rem; margin-bottom: 10px;">?</div>
+                            <div id="quad-icona" style="font-size: 2.5rem; margin-bottom: 10px;"></div>
                             <div id="quad-messaggio">In attesa dell'inserimento dei dati di spoglio...</div>
                             <div id="quad-differenza" style="font-size: 0.9rem; margin-top: 8px; font-weight: normal; font-family: monospace;"></div>
                         </div>
                     </div>
-                </div>
 
-                <div class="paragraph-block" style="margin-top: 30px;">
-                    <h3>  &sect; 37. Risultato dello Scrutinio per il Consiglio Comunale</h3>
-                    <p class="info-text">Aggiungi le liste presenti nel tuo manifesto. Digita il nome, inserisci le schede con preferenza (a) e senza preferenza (b). Il sistema calcolerà i totali automaticamente.</p>
-                    
-                    <table class="table-seggio">
-                        <thead>
-                            <tr>
-                                <th style="width: 70px;">N. Lista</th>
-                                <th>Nome / Contrassegno della Lista</th>
-                                <th style="width: 150px;">(a) Schede CON preferenza</th>
-                                <th style="width: 150px;">(b) Schede SENZA preferenza</th>
-                                <th style="width: 180px;">TOTALE Voti (a + b)</th>
-                                <th style="width: 80px;" class="no-print">Azione</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabella-liste-consiglio-body">
-                            </tbody>
-                        <tfoot>
-                            <tr class="riga-totale" style="background-color: #f1f2f6; font-size: 1.05rem;">
-                                <td colspan="2" style="text-align: right;"><b>TOTALI COMPLESSIVI DI LISTA:</b></td>
-                                <td style="text-align: right;"><strong id="totale-colonna-a">0</strong></td>
-                                <td style="text-align: right;"><strong id="totale-colonna-b">0</strong></td>
-                                <td style="text-align: right; background-color: #e3edf7;"><strong id="totale-voti-liste-generale">0</strong></td>
-                                <td class="no-print"></td>
-                            </tr>
-                            <tr class="no-print" style="background-color: #fafafa;">
-                                <td colspan="2" style="text-align: left; padding: 15px 12px;">
-                                    <button type="button" id="btn-aggiungi-lista" class="btn-success" style="background-color: #00838f; margin: 0;">? Aggiungi Nuova Lista</button>
-                                </td>
-                                <td colspan="4"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                    <!-- BLOCCO TABELLA BIS PERSONALE CON STRUTTURA PERFETTAMENTE SPECULARE -->
+                    <div id="blocco-quadratura-bis" style="margin-top: 30px; padding: 20px; border: 2px dashed #b71c1c; border-radius: 6px; background-color: #fff9f9;">
+                        <h4 style="color: #b71c1c; margin-top: 0; font-weight: bold;">?? Tabella BIS Personale: Controllo Interno / Ulteriore Quadratura</h4>
+                        <p class="info-text" style="color: #c62828; font-weight: bold;">NOTA: Questo blocco costituisce una verifica ad uso interno adattata alla tipologia di comune siciliano selezionata. NON VA RIPORTATA NEL VERBALE.</p>
 
+                        <div class="grid-2-col">
+                            <div>
+                                <table class="table-seggio" style="background: white;">
+                                    <tbody>
+                                        <tr style="background-color: #fffde7;" id="riga-bis-solo-sindaco">
+                                            <td><b>Voti validi Espressi SOLO a favore del Candidato Sindaco:</b></td>
+                                            <td style="text-align: right;"><span id="bis-voti-solo-sindaco" style="font-family:monospace; font-weight:bold; color: #b71c1c;">0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Voti validi per le liste comunali (&sect; 37):</td>
+                                            <td style="text-align: right;"><span id="bis-voti-liste" style="font-family:monospace; font-weight:bold; color: #1e3d59;">0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Schede Bianche (&sect; 27):</td>
+                                            <td style="text-align: right;"><span id="bis-bianche" style="font-family:monospace; font-weight:bold;">0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Schede Nulle (&sect; 28):</td>
+                                            <td style="text-align: right;"><span id="bis-nulle" style="font-family:monospace; font-weight:bold;">0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Schede contenenti solo voti nulli (&sect; 29):</td>
+                                            <td style="text-align: right;"><span id="bis-solo-nulli" style="font-family:monospace; font-weight:bold;">0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Schede contestate e non assegnate relative al Sindaco (Colonna B):</td>
+                                            <td style="text-align: right;"><span id="bis-sindaco-non-assegnate" style="font-family:monospace; font-weight:bold; color: #b71c1c;">0</span></td>
+                                        </tr>
+                                        <tr class="riga-totale" style="background-color: rgba(183, 28, 28, 0.05);">
+                                            <td><b>TOTALE GENERALE CALCOLATO DALLO SPOGLIO INTERNO:</b></td>
+                                            <td style="text-align: right;"><strong id="bis-totale-calcolato" style="font-family:monospace; font-size:1.1rem; color: #b71c1c;">0</strong></td>
+                                        </tr>
+                                    </tbody>
+                                end debug</table>
+                            </div>
+                            <!-- Alert Visivo Quadratura BIS -->
+                            <div id="pannello-alert-bis" style="border-radius: 6px; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-weight: bold; font-size: 1.1rem; border: 2px solid #ccc; background-color: #fff;">
+                                <div id="alert-bis-icona" style="font-size: 2.5rem; margin-bottom: 10px;"></div>
+                                <div id="alert-bis-messaggio">In attesa dei dati...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-
         </section>
     </main>
 
